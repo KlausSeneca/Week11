@@ -1,0 +1,16 @@
+on:
+  push:
+    branches: [ "dev", "staging"]
+    paths: 
+    - staging/**
+  pull_request:
+    branches: [ "prod" ]
+    paths: 
+    - staging/** 
+
+jobs:
+  print-message:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Print message
+        run: echo "Hello, World!"

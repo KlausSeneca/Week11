@@ -7,16 +7,14 @@ name: tfsec
 
 on:
   push:
-    branches: [ "dev", "staging"]
-    paths: 
-    - staging/**
+    branches: [ "prod","staging" ]
   pull_request:
-    branches: [ "prod" ]
-    paths: 
-    - staging/**
+    branches: [ "prod","staging" ]
+  schedule:
+    - cron: '20 8 * * 1'
 
 jobs:
-  tfsec_tflint_staging:
+  tfsec:
     name: Run tfsec sarif report
     runs-on: ubuntu-latest
     permissions:
@@ -27,22 +25,6 @@ jobs:
     steps:
       - name: Clone repo
         uses: actions/checkout@v3
-      
-      - uses: terraform-linters/setup-tflint@v2
-        name: Setup TFLint
-        with:
-           tflint_version: v0.38.1
-           
-      - name: Show version
-        run: tflint --version
-
-      - name: Init TFLint
-        run: tflint --init
-        working-directory: ./staging
-
-      - name: Run TFLint
-        run: tflint -f compact
-        working-directory: ./staging
 
       - name: Run tfsec
         uses: aquasecurity/tfsec-sarif-action@9a83b5c3524f825c020e356335855741fd02745f
