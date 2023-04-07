@@ -1,0 +1,9 @@
+on:
+  push:
+    branches: [ "dev", "staging"]
+    paths: 
+    - staging/**
+  pull_request:
+    branches: [ "prod" ]
+    paths: 
+    - staging/**
